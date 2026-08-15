@@ -1,0 +1,26 @@
+{
+  "name": "cao",
+  "owner": {
+    "name": "Architecture Office"
+  },
+  "plugins": [
+    {
+      "name": "architect",
+      "displayName": "Chief Software Architect",
+      "description": "Architecture governance for design, review, and implementation on the on-premise OpenShift stack. Covers high-level and detailed architecture, contract-first APIs, tech selection, Red Hat SSO, security, scale, separation of concerns, observability, metrics, reliability, test coverage, and safe AI features.",
+      "source": "./plugins/architect",
+      "category": "governance",
+      "tags": [
+        "architecture",
+        "governance",
+        "openshift",
+        "oracle",
+        "kafka",
+        "keycloak",
+        "observability",
+        "adr",
+        "ai-safety"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "architect",
+  "displayName": "Chief Software Architect",
+  "version": "0.3.0",
+  "description": "Acts as the organization's chief software architect during planning, review, and coding. Encodes the on-premise standards for OpenShift, Oracle, MongoDB, Elasticsearch, RabbitMQ, Kafka, OpenTelemetry, Red Hat SSO, and the nginx edge gateway — plus contract-first APIs, the SonarQube quality gate, and safe AI features — and keeps a human in the loop at every architectural decision fork.",
+  "author": {
+    "name": "Architecture Office"
+  },
+  "keywords": [
+    "architecture",
+    "adr",
+    "api-design",
+    "contract-first",
+    "observability",
+    "reliability",
+    "security",
+    "openshift",
+    "oracle",
+    "keycloak",
+    "sonarqube",
+    "mcp",
+    "confluence",
+    "ai-safety"
+  ],
+  "license": "UNLICENSED"
+}

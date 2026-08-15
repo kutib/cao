@@ -1,0 +1,13 @@
+# OS and editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Local Claude Code state — never distributed with the marketplace
+.claude/settings.local.json
+
+# Scratch
+*.log
+tmp/
