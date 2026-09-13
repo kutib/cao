@@ -1,0 +1,1056 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html{color-scheme:light dark}
+  body{margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>שכבת השערים האגנטית</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  direction: rtl;
+
+  --paper:#F1F5F4;
+  --surface:#FFFFFF;
+  --surface-sunk:#E8EEED;
+  --ink:#101A1C;
+  --text:#1E2C2E;
+  --muted:#5C6E70;
+  --faint:#849697;
+  --line:#D3DEDC;
+  --line-soft:#E4ECEA;
+
+  --accent:#0B646E;
+  --accent-bright:#0F8592;
+  --accent-wash:#E2F0F1;
+  --clay:#9A4E2C;
+  --clay-wash:#F6E9E2;
+
+  --ok:#2C6E52;
+  --warn:#946A1F;
+  --crit:#9E3A36;
+
+  --f-display:"Frank Ruhl Libre", "Times New Roman", serif;
+  --f-body:"IBM Plex Sans Hebrew", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --step--1:.8125rem;
+  --step-0:1rem;
+  --step-1:1.1875rem;
+  --step-2:1.4375rem;
+  --step-3:1.8125rem;
+  --step-4:2.375rem;
+  --step-5:3rem;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C1416;
+    --surface:#141E20;
+    --surface-sunk:#101A1C;
+    --ink:#EAF1F0;
+    --text:#DCE7E6;
+    --muted:#93A6A7;
+    --faint:#6C8082;
+    --line:#253436;
+    --line-soft:#1C292B;
+
+    --accent:#4FBCC7;
+    --accent-bright:#6FD3DD;
+    --accent-wash:#10292D;
+    --clay:#D08A63;
+    --clay-wash:#2A1B13;
+
+    --ok:#5DB98D;
+    --warn:#D2A74E;
+    --crit:#E07873;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C1416;
+  --surface:#141E20;
+  --surface-sunk:#101A1C;
+  --ink:#EAF1F0;
+  --text:#DCE7E6;
+  --muted:#93A6A7;
+  --faint:#6C8082;
+  --line:#253436;
+  --line-soft:#1C292B;
+
+  --accent:#4FBCC7;
+  --accent-bright:#6FD3DD;
+  --accent-wash:#10292D;
+  --clay:#D08A63;
+  --clay-wash:#2A1B13;
+
+  --ok:#5DB98D;
+  --warn:#D2A74E;
+  --crit:#E07873;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+body{
+  background:var(--paper);
+  color:var(--text);
+  font-family:var(--f-body);
+  font-size:var(--step-0);
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+
+.wrap{
+  max-width:1100px;
+  margin-inline:auto;
+  padding-inline:24px;
+  padding-block:0 72px;
+}
+
+.prose{max-width:68ch}
+
+h1,h2,h3,h4{font-family:var(--f-display);color:var(--ink);text-wrap:balance;margin:0;font-weight:700}
+h1{font-size:var(--step-5);line-height:1.08;font-weight:900;letter-spacing:-.01em}
+h2{font-size:var(--step-3);line-height:1.2}
+h3{font-size:var(--step-1);line-height:1.3;font-family:var(--f-body);font-weight:700}
+p{margin:0}
+
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent-bright);outline-offset:3px;border-radius:3px}
+
+code,.mono{
+  font-family:var(--f-mono);
+  font-size:.86em;
+  direction:ltr;
+  unicode-bidi:isolate;
+  display:inline-block;
+}
+code{
+  background:var(--surface-sunk);
+  border:1px solid var(--line-soft);
+  border-radius:3px;
+  padding:.05em .34em;
+  color:var(--ink);
+}
+
+.eyebrow{
+  font-family:var(--f-mono);
+  font-size:.72rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--accent);
+  direction:ltr;
+  unicode-bidi:isolate;
+}
+
+/* ---------- masthead ---------- */
+.masthead{
+  border-bottom:1px solid var(--line);
+  background:var(--surface);
+  padding-block:0;
+}
+.masthead-inner{
+  max-width:1100px;margin-inline:auto;padding-inline:24px;
+  padding-block:44px 36px;
+  display:flex;flex-direction:column;gap:22px;
+}
+.doc-id{
+  display:flex;flex-wrap:wrap;gap:10px 18px;align-items:baseline;
+  font-family:var(--f-mono);font-size:.74rem;letter-spacing:.08em;
+  color:var(--muted);direction:ltr;unicode-bidi:isolate;
+}
+.doc-id b{color:var(--accent);font-weight:500}
+.lede{font-size:var(--step-1);color:var(--muted);max-width:62ch;line-height:1.62}
+
+.verdict{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  margin-top:6px;
+}
+.verdict > div{background:var(--surface);padding:16px 18px;display:flex;flex-direction:column;gap:5px}
+.verdict dt{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);direction:ltr;unicode-bidi:isolate}
+.verdict dd{margin:0;font-weight:600;color:var(--ink);font-size:.97rem;line-height:1.45}
+
+/* ---------- sections ---------- */
+section{padding-top:60px}
+.sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:26px;max-width:68ch}
+.sec-head .num{
+  font-family:var(--f-mono);font-size:.74rem;letter-spacing:.16em;color:var(--accent);
+  direction:ltr;unicode-bidi:isolate;
+}
+.stack{display:flex;flex-direction:column;gap:18px}
+.stack-tight{display:flex;flex-direction:column;gap:11px}
+
+/* ---------- protocol lanes ---------- */
+.lanes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.lane{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-top:3px solid var(--accent);
+  padding:18px 18px 20px;
+  display:flex;flex-direction:column;gap:9px;
+}
+.lane:nth-child(2){border-top-color:var(--accent-bright)}
+.lane:nth-child(3){border-top-color:var(--clay)}
+.lane:nth-child(4){border-top-color:var(--muted)}
+.lane h3{font-size:1.02rem}
+.lane .wire{
+  font-family:var(--f-mono);font-size:.72rem;color:var(--muted);
+  direction:ltr;unicode-bidi:isolate;line-height:1.6;
+}
+.lane p{font-size:.92rem;color:var(--muted);line-height:1.6}
+
+/* ---------- diagram ---------- */
+figure{margin:0;display:flex;flex-direction:column;gap:10px}
+.diagram{
+  background:var(--surface);
+  border:1px solid var(--line);
+  padding:18px 10px;
+  overflow-x:auto;
+}
+.diagram svg{display:block;min-width:640px;max-width:100%;height:auto;margin-inline:auto}
+figcaption{font-size:.82rem;color:var(--muted);line-height:1.6}
+
+/* ---------- candidates ---------- */
+.group-label{
+  display:flex;align-items:center;gap:12px;
+  margin:34px 0 16px;
+}
+.group-label span{
+  font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--clay);white-space:nowrap;direction:ltr;unicode-bidi:isolate;
+}
+.group-label::after{content:"";flex:1;height:1px;background:var(--line)}
+
+.cand{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:12px;
+  padding:20px 0;
+  border-top:1px solid var(--line-soft);
+}
+.cand:first-of-type{border-top:0}
+.cand-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px}
+.cand-head h3{font-size:1.1rem}
+.cand-head .org{font-size:.82rem;color:var(--faint)}
+.cand p{font-size:.95rem;color:var(--muted);max-width:70ch}
+.cand .verdict-line{
+  font-size:.92rem;color:var(--text);
+  border-inline-start:3px solid var(--accent-wash);
+  padding-inline-start:12px;
+  max-width:70ch;
+}
+.pill{
+  display:inline-block;
+  font-family:var(--f-mono);font-size:.68rem;letter-spacing:.05em;
+  padding:.2em .55em;border-radius:2px;
+  direction:ltr;unicode-bidi:isolate;
+  border:1px solid transparent;
+}
+.pill.oss{background:var(--accent-wash);color:var(--accent);border-color:var(--accent-wash)}
+.pill.ee{background:var(--clay-wash);color:var(--clay)}
+.pill.saas{background:var(--surface-sunk);color:var(--muted);border-color:var(--line-soft)}
+
+/* ---------- matrix ---------- */
+.matrix-scroll{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:780px;font-size:.88rem}
+caption{text-align:start;font-size:.82rem;color:var(--muted);padding:0 0 10px;caption-side:top}
+th,td{text-align:start;padding:10px 13px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--faint);font-weight:500;background:var(--surface-sunk);
+  border-bottom:1px solid var(--line);white-space:nowrap;
+  direction:ltr;unicode-bidi:isolate;text-align:start;
+}
+tbody th{font-weight:600;color:var(--ink);white-space:nowrap;font-size:.92rem}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
+tbody tr.focus-row th,tbody tr.focus-row td{background:var(--accent-wash)}
+.mark{font-family:var(--f-mono);font-size:.95rem;line-height:1;display:inline-block}
+.mark.y{color:var(--ok)}
+.mark.p{color:var(--warn)}
+.mark.n{color:var(--faint)}
+.cell-note{display:block;font-size:.74rem;color:var(--faint);margin-top:2px;line-height:1.4}
+.legend{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:.78rem;color:var(--muted);margin-top:10px}
+
+/* ---------- recommendation ---------- */
+.rec{
+  background:var(--surface);
+  border:1px solid var(--accent);
+  border-top-width:4px;
+  padding:26px 24px;
+  display:flex;flex-direction:column;gap:18px;
+}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.rec-item{display:flex;flex-direction:column;gap:6px}
+.rec-item .role{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);direction:ltr;unicode-bidi:isolate}
+.rec-item .pick{font-weight:700;color:var(--ink);font-size:1.02rem}
+.rec-item .why{font-size:.87rem;color:var(--muted);line-height:1.55}
+
+/* ---------- contracts / rules ---------- */
+.rules{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line)}
+.rule{background:var(--surface);padding:15px 18px;display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr);gap:6px 20px;align-items:baseline}
+.rule .k{font-weight:600;color:var(--ink);font-size:.93rem}
+.rule .v{font-size:.9rem;color:var(--muted);line-height:1.6}
+@media (max-width:620px){.rule{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- oci ---------- */
+.oci-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.oci-card{background:var(--surface);border:1px solid var(--line);padding:17px 18px;display:flex;flex-direction:column;gap:8px}
+.oci-card h3{font-size:.99rem}
+.oci-card .status{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;direction:ltr;unicode-bidi:isolate}
+.oci-card p{font-size:.89rem;color:var(--muted);line-height:1.58}
+.s-fills{color:var(--ok)}
+.s-partial{color:var(--warn)}
+.s-gap{color:var(--crit)}
+
+/* ---------- risks ---------- */
+.risk{display:grid;grid-template-columns:6px minmax(0,1fr);gap:16px;background:var(--surface);border:1px solid var(--line);padding:0}
+.risk .bar{background:var(--warn)}
+.risk.high .bar{background:var(--crit)}
+.risk.low .bar{background:var(--ok)}
+.risk .body{padding-block:15px 16px;padding-inline-end:18px;display:flex;flex-direction:column;gap:5px}
+.risk h3{font-size:.97rem}
+.risk p{font-size:.89rem;color:var(--muted);line-height:1.58}
+.risk .mit{font-size:.87rem;color:var(--text)}
+.risk .mit b{color:var(--accent);font-weight:600}
+
+/* ---------- plan ---------- */
+.phases{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);background:var(--surface)}
+.phase{display:grid;grid-template-columns:minmax(0,110px) minmax(0,1fr);gap:4px 20px;padding:18px;border-bottom:1px solid var(--line-soft)}
+.phase:last-child{border-bottom:0}
+.phase .when{font-family:var(--f-mono);font-size:.78rem;color:var(--accent);letter-spacing:.04em;direction:ltr;unicode-bidi:isolate}
+.phase h3{font-size:1rem;margin-bottom:4px}
+.phase ul{margin:0;padding-inline-start:1.1em;display:flex;flex-direction:column;gap:4px}
+.phase li{font-size:.89rem;color:var(--muted);line-height:1.55}
+.phase .gate{margin-top:8px;font-size:.85rem;color:var(--text)}
+.phase .gate b{color:var(--clay);font-weight:600}
+@media (max-width:620px){.phase{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- sources ---------- */
+.sources{columns:2;column-gap:36px;font-size:.83rem;line-height:1.65}
+.sources li{break-inside:avoid;margin-bottom:8px}
+@media (max-width:640px){.sources{columns:1}}
+ul.plainlist{margin:0;padding-inline-start:1.15em}
+
+hr.div{border:0;border-top:1px solid var(--line);margin:0}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="doc-id">
+      <span><b>ADR-001</b></span>
+      <span>AI GATEWAY LAYER</span>
+      <span>STATUS: PROPOSED</span>
+      <span>2026-09-13</span>
+      <span>HORIZON: OCI T+12M</span>
+    </div>
+    <h1>שכבת השערים האגנטית</h1>
+    <p class="lede">
+      בחירת שער אחד שמכסה תעבורת <span class="mono">LLM</span>, <span class="mono">MCP</span> ו‑<span class="mono">A2A</span> —
+      ומשמש במקביל כ‑API Management ארגוני ראשון — מבלי להיכנס לנעילה שתכאב בהגירה ל‑Oracle Cloud בעוד שנה.
+    </p>
+    <dl class="verdict">
+      <div>
+        <dt>Recommendation</dt>
+        <dd>agentgateway + kgateway<br>עם תמיכת Solo Enterprise</dd>
+      </div>
+      <div>
+        <dt>Runner-up</dt>
+        <dd>Gravitee Platform EE<br>אם עומק APIM גובר על גמישות</dd>
+      </div>
+      <div>
+        <dt>Licensing</dt>
+        <dd>Apache‑2.0 בליבה<br>חוזה תמיכה נפרד</dd>
+      </div>
+      <div>
+        <dt>OCI fit</dt>
+        <dd>רץ על OKE כפי שהוא<br>אין מקבילה מנוהלת ב‑OCI</dd>
+      </div>
+    </dl>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section id="framing">
+    <div class="sec-head">
+      <span class="num">§ 1</span>
+      <h2>ארבע דרישות, ארבע שכבות תעבורה</h2>
+      <p class="lede" style="font-size:1rem">
+        השוק מוכר "AI Gateway" כמילה אחת, אבל מדובר בארבעה סוגי תעבורה שונים לחלוטין —
+        עם מודלי סשן, אימות ומדידה שונים. זו הסיבה שרוב המוצרים חזקים בשתיים מהן וחלשים בשאר.
+      </p>
+    </div>
+
+    <div class="lanes">
+      <div class="lane">
+        <h3>שער LLM</h3>
+        <p class="wire">POST /v1/chat/completions · SSE · stateless</p>
+        <p>ניתוב בין ספקים, virtual keys, תקציבי טוקנים, semantic cache, guardrails ו‑failover. המדידה היא טוקנים ועלות, לא בקשות.</p>
+      </div>
+      <div class="lane">
+        <h3>שער MCP</h3>
+        <p class="wire">Streamable HTTP · OAuth 2.1 RS · stateful session</p>
+        <p>פדרציה של שרתי כלים, קטלוג ו‑discovery, הרשאה ברמת <span class="mono">tool</span> בודד, והגנה מפני tool poisoning ו‑rug pull. סשנים ארוכי חיים ודו‑כיווניים.</p>
+      </div>
+      <div class="lane">
+        <h3>שער A2A</h3>
+        <p class="wire">JSON-RPC · Agent Card · task lifecycle</p>
+        <p>גילוי סוכנים, האצלת זהות עם שרשרת token exchange ניתנת למעקב, ו‑audit מלא של שיחות בין סוכנים. הפרוטוקול הצעיר מהשלושה.</p>
+      </div>
+      <div class="lane">
+        <h3>API Management</h3>
+        <p class="wire">OpenAPI · dev portal · lifecycle · plans</p>
+        <p>קטלוג, פורטל מפתחים, מחזור חיים, מכסות, מוניטיזציה וממשל. הדרישה הוותיקה — וזו שהכי הרבה מוצרי AI‑native מפספסים.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="architecture">
+    <div class="sec-head">
+      <span class="num">§ 2</span>
+      <h2>הארכיטקטורה המוצעת</h2>
+      <p class="lede" style="font-size:1rem">
+        data plane אחד לכל תעבורת ה‑AI, מאחורי חוזים סטנדרטיים בלבד. כל רכיב בתרשים ניתן להחלפה
+        מבלי לגעת בקוד של האפליקציות.
+      </p>
+    </div>
+
+    <figure>
+      <div class="diagram">
+        <svg viewBox="0 0 720 430" role="img" aria-labelledby="diagTitle diagDesc">
+          <title id="diagTitle">תרשים שכבות שער ה-AI</title>
+          <desc id="diagDesc">צרכנים פונים לשכבת שער אחת המפוצלת לארבעה נתיבי פרוטוקול, ומאחוריה יעדים כולל שירותי OCI</desc>
+
+          <!-- consumers -->
+          <rect x="20" y="16" width="680" height="60" fill="var(--surface-sunk)" stroke="var(--line)"/>
+          <text x="360" y="40" text-anchor="middle" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">צרכנים</text>
+          <text x="360" y="60" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">IDE agents · internal apps · orchestrators · partner agents</text>
+
+          <path d="M360 76 L360 100" stroke="var(--accent)" stroke-width="1.5"/>
+          <path d="M354 94 L360 102 L366 94" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+
+          <!-- gateway plane -->
+          <rect x="20" y="104" width="680" height="150" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="682" y="126" text-anchor="end" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="13" font-weight="700" fill="var(--accent)">שכבת השער · agentgateway + kgateway</text>
+          <text x="682" y="144" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--faint)">Kubernetes Gateway API · OKE</text>
+
+          <rect x="36" y="158" width="158" height="80" fill="var(--accent-wash)" stroke="var(--line)"/>
+          <text x="115" y="182" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="500" fill="var(--accent)">LLM</text>
+          <text x="115" y="202" text-anchor="middle" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="10.5" fill="var(--muted)">ניתוב · תקציב טוקנים</text>
+          <text x="115" y="220" text-anchor="middle" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="10.5" fill="var(--muted)">guardrails · cache</text>
+
+          <rect x="202" y="158" width="158" height="80" fill="var(--accent-wash)" stroke="var(--line)"/>
+          <text x="281" y="182" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="500" fill="var(--accent)">MCP</text>
+          <text x="281" y="202" text-anchor="middle" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="10.5" fill="var(--muted)">פדרציית כלים</text>
+          <text x="281" y="220" text-anchor="middle" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="10.5" fill="var(--muted)">הרשאה לכל tool</text>
+
+          <rect x="368" y="158" width="158" height="80" fill="var(--accent-wash)" stroke="var(--line)"/>
+          <text x="447" y="182" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="500" fill="var(--accent)">A2A</text>
+          <text x="447" y="202" text-anchor="middle" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="10.5" fill="var(--muted)">גילוי סוכנים</text>
+          <text x="447" y="220" text-anchor="middle" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="10.5" fill="var(--muted)">האצלת זהות · audit</text>
+
+          <rect x="534" y="158" width="150" height="80" fill="var(--surface-sunk)" stroke="var(--line)"/>
+          <text x="609" y="182" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="500" fill="var(--clay)">REST / gRPC</text>
+          <text x="609" y="202" text-anchor="middle" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="10.5" fill="var(--muted)">APIM · פורטל</text>
+          <text x="609" y="220" text-anchor="middle" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="10.5" fill="var(--muted)">מכסות · מחזור חיים</text>
+
+          <!-- sidecar registry -->
+          <path d="M360 254 L360 280" stroke="var(--accent)" stroke-width="1.5"/>
+          <path d="M354 272 L360 281 L366 272" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+
+          <!-- control -->
+          <rect x="20" y="284" width="680" height="46" fill="none" stroke="var(--line)" stroke-dasharray="4 3"/>
+          <text x="360" y="304" text-anchor="middle" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">רישום ומדיניות · ContextForge registry · OIDC · OTLP</text>
+          <text x="360" y="321" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--faint)">identity → OCI IAM domains · telemetry → OCI APM</text>
+
+          <!-- backends -->
+          <rect x="20" y="352" width="330" height="62" fill="var(--surface)" stroke="var(--line)"/>
+          <text x="185" y="374" text-anchor="middle" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">יעדים פנימיים</text>
+          <text x="185" y="394" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--muted)">MCP servers · agents · legacy REST · Kafka</text>
+
+          <rect x="370" y="352" width="330" height="62" fill="var(--clay-wash)" stroke="var(--clay)"/>
+          <text x="535" y="374" text-anchor="middle" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="12" font-weight="600" fill="var(--clay)">יעדי OCI לאחר ההגירה</text>
+          <text x="535" y="394" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--muted)">GenAI /openai/v1 · ADB A2A · managed MCP</text>
+        </svg>
+      </div>
+      <figcaption>
+        שירותי ה‑AI של Oracle נכנסים כ<strong>יעדים</strong> מאחורי השער, לא כתחליף לו. זה מה שמאפשר להגר לענן מבלי לגעת בצרכנים.
+      </figcaption>
+    </figure>
+  </section>
+
+  <section id="landscape">
+    <div class="sec-head">
+      <span class="num">§ 3</span>
+      <h2>מפת המוצרים</h2>
+      <p class="lede" style="font-size:1rem">
+        השוק מתחלק לשלושה ארכיטיפים. ההבדל ביניהם הוא לא רשימת פיצ'רים אלא מאיזה כיוון הם הגיעו —
+        וזה קובע במה הם טובים באמת.
+      </p>
+    </div>
+
+    <div class="group-label"><span>A · AI-native agent gateways</span></div>
+
+    <div class="cand">
+      <div class="cand-head">
+        <h3>agentgateway</h3>
+        <span class="org">Linux Foundation · נתרם ע"י Solo.io</span>
+        <span class="pill oss">Apache-2.0</span>
+      </div>
+      <p>
+        פרוקסי שנבנה מאפס לתעבורה אגנטית: MCP ו‑A2A כאזרחים מדרגה ראשונה, ניתוב LLM ל‑OpenAI,
+        Anthropic, Gemini ו‑Bedrock מאחורי API תואם‑OpenAI אחד, פדרציה ו‑multiplexing של שרתי MCP,
+        RBAC עם מנוע מדיניות CEL, JWT, rate limiting ו‑OpenTelemetry. תומך ב‑Kubernetes Gateway API
+        מלא (<span class="mono">HTTPRoute</span>, <span class="mono">GRPCRoute</span>) וגם רץ כבינארי בודד.
+      </p>
+      <p class="verdict-line">
+        הפתרון היחיד שנבנה סביב סשנים stateful ודו‑כיווניים במקום להוסיף אותם לפרוקסי REST. ממשל ניטרלי מוריד סיכון נעילה. תמיכה מסחרית זמינה דרך Solo Enterprise.
+      </p>
+    </div>
+
+    <div class="cand">
+      <div class="cand-head">
+        <h3>kgateway</h3>
+        <span class="org">CNCF Sandbox · Solo.io</span>
+        <span class="pill oss">Apache-2.0</span>
+        <span class="pill ee">Portal ב‑EE</span>
+      </div>
+      <p>
+        שער API מבוסס Envoy עם שבע שנות פרודקשן מאחוריו. נותן את כל צד ה‑REST/gRPC — ניתוב, mTLS,
+        JWT, circuit breakers, rate limiting — ומשתלב ישירות עם agentgateway. Solo Enterprise מוסיף
+        פורטל מפתחים, אנליטיקה ומוניטיזציה, WAF, DLP, external auth, תמונות FIPS ותמיכה 24×7.
+      </p>
+      <p class="verdict-line">
+        זה מה שהופך את הזוג הזה מ"שער AI" ל"גם APIM". הפורטל והמוניטיזציה פחות עמוקים מ‑Kong או Gravitee — מספיק לארגון שמתחיל APIM מאפס, פחות מספיק לקטלוג של מאות APIs עם שותפים חיצוניים.
+      </p>
+    </div>
+
+    <div class="cand">
+      <div class="cand-head">
+        <h3>ContextForge</h3>
+        <span class="org">IBM · <span class="mono">mcp-context-forge</span></span>
+        <span class="pill oss">Apache-2.0</span>
+      </div>
+      <p>
+        רג'יסטרי ופרוקסי שמאחד MCP, A2A ו‑REST/gRPC לנקודת קצה אחת עם discovery מרכזי, RBAC וצוותים,
+        OAuth 2.0/OIDC/SSO, token exchange לפי RFC 8693, אחזור credentials פר‑משתמש מ‑Vault,
+        המרת OpenAPI לסכמות כלי MCP, ו‑40+ תוספים. הגיע ל‑GA במאי 2026 וממשיך בקצב מהיר.
+      </p>
+      <p class="verdict-line">
+        לא שער תעבורה ולא APIM — אבל הקטלוג והממשל הכי בשלים בקטגוריה לשרתי MCP וסוכנים. שווה לשקול אותו <em>לצד</em> השער כשכבת רישום, לא במקומו.
+      </p>
+    </div>
+
+    <div class="group-label"><span>B · APIM platforms adding AI</span></div>
+
+    <div class="cand">
+      <div class="cand-head">
+        <h3>Gravitee Platform</h3>
+        <span class="org">Gravitee.io</span>
+        <span class="pill oss">CE: Apache-2.0</span>
+        <span class="pill ee">AI: EE בלבד</span>
+      </div>
+      <p>
+        הספק היחיד שמאגד LLM Proxy, MCP Proxy ו‑A2A Proxy תחת חוויית ניהול אחת, מעל פלטפורמת APIM
+        מלאה: גייטוויי, פורטל, קטלוג, פדרציה של שערים אחרים, ניהול אירועים ל‑Kafka וניהול הרשאות.
+        Traces של OpenTelemetry מועשרים במזהי ישויות מהקטלוג ובהחלטות מדיניות. SaaS, self‑hosted או היברידי.
+      </p>
+      <p class="verdict-line">
+        המועמד החזק ביותר אם עומק ה‑APIM שווה בחשיבותו לצד ה‑AI — control plane אחד, ספק אחד, חוזה אחד. המחיר: כל יכולות ה‑AI נעולות מאחורי Enterprise Edition, וזה בדיוק החלק שקשה להחליף אחר כך.
+      </p>
+    </div>
+
+    <div class="cand">
+      <div class="cand-head">
+        <h3>Kong AI Gateway</h3>
+        <span class="org">Kong Inc. · Konnect</span>
+        <span class="pill oss">Core: Apache-2.0</span>
+        <span class="pill ee">AI: Enterprise</span>
+      </div>
+      <p>
+        Agent Gateway הושק באפריל 2026 בגרסה 3.14 והוסיף תעבורת A2A עם spans ייעודיים ב‑tracing,
+        audit מלא של שיחות בין סוכנים ומעקב צריכת טוקנים גרנולרי, לצד <span class="mono">ai-mcp-proxy</span>
+        (מגרסה 3.12) שממיר REST ל‑MCP ומתווך לשרתי MCP קיימים. MCP Composer ו‑MCP Runner בדרך.
+      </p>
+      <p class="verdict-line">
+        הבשל ביותר ב‑A2A והאקוסיסטם הגדול ביותר. אבל <span class="mono">ai-mcp-proxy</span> ותוספי ה‑AI המתקדמים הם Enterprise בלבד, ו‑Konnect מכוון ל‑SaaS — שתי נקודות שמושכות לכיוון נעילה.
+      </p>
+    </div>
+
+    <div class="cand">
+      <div class="cand-head">
+        <h3>WSO2 API Platform</h3>
+        <span class="org">WSO2</span>
+        <span class="pill oss">Apache-2.0</span>
+      </div>
+      <p>
+        הושק במרץ 2026: AI Gateway שהופך APIs קיימים לכלי MCP וממשל על שימוש בכלי MCP של צד שלישי,
+        AI Workspace כ‑control plane ל‑LLMs ושרתי MCP עם 30+ guardrails, מדיניות מודעת‑טוקנים,
+        מוניטיזציה מאוחדת, ופדרציה של שערים קיימים כמו Kong ו‑Azure APIM ללא הגירה.
+      </p>
+      <p class="verdict-line">
+        הבסיס הכי רחב שפתוח ב‑Apache‑2.0, והפדרציה מעניינת לארגון עם עבר. פחות מפורש לגבי A2A מהשניים שמעליו, וה‑stack כבד יותר לתפעול.
+      </p>
+    </div>
+
+    <div class="group-label"><span>C · LLM-first gateways</span></div>
+
+    <div class="cand">
+      <div class="cand-head">
+        <h3>LiteLLM</h3>
+        <span class="org">BerriAI</span>
+        <span class="pill oss">OSS core</span>
+      </div>
+      <p>
+        ביוני 2026 הפך OCI Generative AI לספק native ב‑LiteLLM — כולל חתימת OCI Signature v1 לכל
+        מסלולי האימות: credentials ידניים, משתני סביבה, OCI SDK Signer, Instance Principal ו‑OKE
+        Workload Identity. Oracle עצמה מציבה את LiteLLM כשער ה‑AI הארגוני על OCI: virtual keys,
+        תקציבים, ניתוב, cache, guardrails ו‑audit.
+      </p>
+      <p class="verdict-line">
+        זו העובדה הכי שימושית במסמך הזה. גם אם לא בוחרים ב‑LiteLLM כשער הראשי — זה הרכיב שמובטח שיעבוד מול OCI ביום ההגירה, ושווה כתוכנית מגירה לשכבת ה‑LLM.
+      </p>
+    </div>
+
+    <div class="cand">
+      <div class="cand-head">
+        <h3>Envoy AI Gateway · Apache APISIX · Tyk · Apigee · Zuplo</h3>
+        <span class="org">שאר הזירה</span>
+        <span class="pill saas">מעורב</span>
+      </div>
+      <p>
+        לכולם יש שער LLM וברובם גם יכולת MCP כלשהי. אף אחד מהם לא מספק A2A נכון להיום.
+        Apigee בולט ביכולת לייצר שרתי MCP אוטומטית מ‑OpenAPI קיים — אבל הוא Google Cloud בלבד,
+        מה שפוסל אותו כשהיעד הוא Oracle.
+      </p>
+      <p class="verdict-line">
+        לא רלוונטיים כשער מאוחד. Envoy AI Gateway ו‑APISIX נשארים רלוונטיים כתוכנית ב' אם הליבה הנבחרת תיתקע.
+      </p>
+    </div>
+  </section>
+
+  <section id="matrix">
+    <div class="sec-head">
+      <span class="num">§ 4</span>
+      <h2>מטריצת כיסוי</h2>
+    </div>
+    <div class="matrix-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">פתרון</th>
+            <th scope="col">LLM</th>
+            <th scope="col">MCP</th>
+            <th scope="col">A2A</th>
+            <th scope="col">APIM</th>
+            <th scope="col">רישוי ליבה</th>
+            <th scope="col">תמיכה מסחרית</th>
+            <th scope="col">נטל הגירה ל‑OCI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="focus-row">
+            <th scope="row">agentgateway + kgateway</th>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark p">◐</span><span class="cell-note">פורטל ב‑EE</span></td>
+            <td>Apache-2.0</td>
+            <td>Solo Enterprise</td>
+            <td>נמוך<span class="cell-note">Helm על OKE</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Gravitee Platform</th>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark y">●</span></td>
+            <td>CE: Apache-2.0</td>
+            <td>Gravitee EE</td>
+            <td>נמוך<span class="cell-note">self-hosted</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Kong AI Gateway</th>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark y">●</span></td>
+            <td>Core: Apache-2.0</td>
+            <td>Kong Konnect</td>
+            <td>בינוני<span class="cell-note">control plane ב‑SaaS</span></td>
+          </tr>
+          <tr>
+            <th scope="row">WSO2 API Platform</th>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark p">◐</span></td>
+            <td><span class="mark y">●</span></td>
+            <td>Apache-2.0</td>
+            <td>WSO2</td>
+            <td>נמוך</td>
+          </tr>
+          <tr>
+            <th scope="row">IBM ContextForge</th>
+            <td><span class="mark p">◐</span></td>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark n">○</span></td>
+            <td>Apache-2.0</td>
+            <td><span class="mark n">○</span><span class="cell-note">קהילה</span></td>
+            <td>נמוך</td>
+          </tr>
+          <tr>
+            <th scope="row">LiteLLM</th>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark p">◐</span></td>
+            <td><span class="mark n">○</span></td>
+            <td><span class="mark n">○</span></td>
+            <td>OSS core</td>
+            <td>BerriAI</td>
+            <td>נמוך<span class="cell-note">ספק OCI native</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Envoy AI Gateway</th>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark n">○</span></td>
+            <td><span class="mark n">○</span></td>
+            <td>Apache-2.0</td>
+            <td>משתנה</td>
+            <td>נמוך</td>
+          </tr>
+          <tr>
+            <th scope="row">Apigee</th>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark y">●</span></td>
+            <td><span class="mark n">○</span></td>
+            <td><span class="mark y">●</span></td>
+            <td>קנייני</td>
+            <td>Google</td>
+            <td>פוסל<span class="cell-note">GCP בלבד</span></td>
+          </tr>
+          <tr>
+            <th scope="row">OCI native</th>
+            <td><span class="mark p">◐</span><span class="cell-note">model router</span></td>
+            <td><span class="mark p">◐</span><span class="cell-note">שרתים, לא שער</span></td>
+            <td><span class="mark p">◐</span><span class="cell-note">קשור ל‑ADB</span></td>
+            <td><span class="mark p">◐</span><span class="cell-note">ללא פורטל</span></td>
+            <td>קנייני</td>
+            <td>Oracle</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="legend">
+      <span><span class="mark y">●</span> כיסוי מלא</span>
+      <span><span class="mark p">◐</span> חלקי או מותנה ברישיון</span>
+      <span><span class="mark n">○</span> אין</span>
+    </p>
+  </section>
+
+  <section id="recommendation">
+    <div class="sec-head">
+      <span class="num">§ 5</span>
+      <h2>ההחלטה</h2>
+    </div>
+
+    <div class="rec">
+      <p style="max-width:70ch;color:var(--muted)">
+        בהינתן שאין APIM קיים, שהעדפת הרישוי היא OSS עם חוזה תמיכה, ושה‑Kubernetes בשל ובפרודקשן —
+        זו הקומבינציה שנותנת את הכיסוי הרחב ביותר עם עלות הפרידה הנמוכה ביותר.
+      </p>
+      <div class="rec-grid">
+        <div class="rec-item">
+          <span class="role">AI data plane</span>
+          <span class="pick">agentgateway</span>
+          <span class="why">MCP, A2A וניתוב LLM בשער אחד. Apache‑2.0 תחת Linux Foundation — לא תחת ספק.</span>
+        </div>
+        <div class="rec-item">
+          <span class="role">API data plane + portal</span>
+          <span class="pick">kgateway</span>
+          <span class="why">Envoy בוגר, Gateway API תקני, Gloo Portal ב‑Enterprise. זה ה‑APIM הראשון של הארגון.</span>
+        </div>
+        <div class="rec-item">
+          <span class="role">Tool &amp; agent registry</span>
+          <span class="pick">ContextForge</span>
+          <span class="why">קטלוג MCP/A2A, בעלות על כלים לפי צוות, ו‑token exchange לפי RFC 8693 מול Vault.</span>
+        </div>
+        <div class="rec-item">
+          <span class="role">Fallback · LLM</span>
+          <span class="pick">LiteLLM</span>
+          <span class="why">ספק OCI native מיוני 2026, כולל OKE Workload Identity. ביטוח ליום ההגירה.</span>
+        </div>
+        <div class="rec-item">
+          <span class="role">Commercial cover</span>
+          <span class="pick">Solo Enterprise</span>
+          <span class="why">24×7, תמיכה N‑3, תמונות FIPS, WAF ו‑DLP — מעל אותה ליבת קוד פתוח.</span>
+        </div>
+        <div class="rec-item">
+          <span class="role">אם ההעדפה תשתנה</span>
+          <span class="pick">Gravitee EE</span>
+          <span class="why">אם ועדת הארכיטקטורה תעדיף ספק אחד וחוזה אחד על פני גמישות — זו החלופה, ולא Kong.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-head" style="margin-top:44px">
+      <h3 style="font-family:var(--f-display);font-size:var(--step-2)">חמישה חוזים שאסור להפר</h3>
+      <p style="font-size:.95rem;color:var(--muted);max-width:68ch">
+        ההחלטה על מוצר היא הפיכה. ההחלטה על חוזי הממשק — לא. אלה הכללים שהופכים את כל השאר לניתן להחלפה,
+        ובדיוק הם שמכשירים את הקרקע ל‑OCI.
+      </p>
+    </div>
+
+    <div class="rules">
+      <div class="rule">
+        <span class="k">חוזה LLM צפוני</span>
+        <span class="v">אפליקציות מדברות רק <code>POST /v1/chat/completions</code> תואם‑OpenAI. זהו בדיוק הפורמט ש‑OCI Generative AI חושפת נייטיב ב‑<code>/openai/v1</code> — כולל Responses ו‑Conversations. אף SDK ספציפי‑ספק בקוד האפליקציה.</span>
+      </div>
+      <div class="rule">
+        <span class="k">MCP רק מרוחק</span>
+        <span class="v">Streamable HTTP בלבד, לעולם לא <code>stdio</code> בפרודקשן. כל שרת MCP הוא OAuth 2.1 Resource Server עם audience מוגדר. זה מה שמאפשר לשער לאכוף הרשאה ברמת כלי בודד.</span>
+      </div>
+      <div class="rule">
+        <span class="k">Agent Cards בבעלותנו</span>
+        <span class="v">רג'יסטרי A2A שהארגון מחזיק, לא רג'יסטרי מוטמע בפלטפורמת ספק. Oracle השיקה ביולי 2026 A2A Server בתוך Autonomous AI Database — הוא ייכנס כמקור נוסף לרג'יסטרי שלנו, לא כרג'יסטרי עצמו.</span>
+      </div>
+      <div class="rule">
+        <span class="k">תצורה כ‑Gateway API</span>
+        <span class="v">כל הניתוב מוגדר ב‑CRDs תקניים של Kubernetes Gateway API תחת GitOps. CRD ייחודי לספק הוא חוב שצריך אישור מפורש.</span>
+      </div>
+      <div class="rule">
+        <span class="k">טלמטריה וזהות תקניות</span>
+        <span class="v">OTLP החוצה בלבד — יופנה ל‑OCI APM ביום ההגירה. זהות דרך OIDC בלבד — תוחלף ל‑OCI IAM domains. שני חיבורים, לא מאה.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="oci">
+    <div class="sec-head">
+      <span class="num">§ 6</span>
+      <h2>מה Oracle באמת נותנת בעוד שנה</h2>
+      <p class="lede" style="font-size:1rem">
+        זו הבדיקה החשובה, והתשובה מפתיעה: Oracle בונה <strong>נקודות קצה</strong> אגנטיות ופלטפורמת סוכנים
+        מנוהלת — אבל לא שער ניטרלי לתעבורת AI של צד שלישי. אין ב‑OCI מוצר שיחליף את השכבה הזו.
+      </p>
+    </div>
+
+    <div class="oci-grid">
+      <div class="oci-card">
+        <span class="status s-gap">GAP</span>
+        <h3>OCI API Gateway</h3>
+        <p>
+          JWT, rate limiting, CORS, usage plans ומוניטיזציה — שער קל משקל ותו לא. ארכיטקטורת הייחוס
+          של Oracle ל‑API Management למודלי AI מרכיבה אותו יחד עם Vault, Functions ו‑Cache with Redis.
+          אין פורטל מפתחים, אין מדידת טוקנים, אין MCP ואין A2A.
+        </p>
+      </div>
+      <div class="oci-card">
+        <span class="status s-partial">PARTIAL</span>
+        <h3>OCI Enterprise AI</h3>
+        <p>
+          הגיע ל‑GA וכולל model router, אורקסטרציה של סוכנים, guardrails, audit logs בלתי ניתנים לשינוי,
+          אפשרויות sovereign ו‑zero data retention. מצוין — אבל עבור סוכנים שרצים בתוך OCI, לא כשכבת
+          ממשל רוחבית מעל כל תעבורת ה‑AI של הארגון.
+        </p>
+      </div>
+      <div class="oci-card">
+        <span class="status s-fills">FITS</span>
+        <h3>GenAI · OpenAI-compatible</h3>
+        <p>
+          <code>inference.generativeai.{region}.oci.oraclecloud.com/openai/v1</code> עם
+          <code>/responses</code>, <code>/conversations</code>, <code>/chat/completions</code>,
+          <code>/vector_stores</code> ו‑<code>/containers</code>, ואימות דרך OCI IAM.
+          ה‑Responses API אף מקבל כלי מסוג <code>mcp</code> עם <code>server_url</code> ישירות.
+        </p>
+      </div>
+      <div class="oci-card">
+        <span class="status s-partial">PARTIAL</span>
+        <h3>שרתי MCP מנוהלים</h3>
+        <p>
+          SQLcl, OCI Database Tools (serverless מנוהל), ORDS עם endpoint <code>/mcp</code>, MySQL,
+          ואוסף שרתי OCI ל‑Cloud Guard, Compute, Storage, IAM וניטור. אלה שרתי MCP מעולים —
+          כלומר יעדים שיישבו מאחורי השער שלנו.
+        </p>
+      </div>
+      <div class="oci-card">
+        <span class="status s-partial">PARTIAL</span>
+        <h3>Autonomous AI DB · A2A Server</h3>
+        <p>
+          הוכרז ביולי 2026: יכולת multi-tenant מנוהלת בתוך בסיס הנתונים לגילוי והפעלה של סוכנים,
+          עם הרשאה נייטיבית, לוגים, rate limiting ואכיפת מדיניות. מצוין לסוכנים שחיים ליד הדאטה —
+          אבל קשור ל‑ADB ולא מכסה סוכנים חיצוניים.
+        </p>
+      </div>
+      <div class="oci-card">
+        <span class="status s-fills">FITS</span>
+        <h3>OKE</h3>
+        <p>
+          כל המועמדים שנבחרו הם עומסי עבודה סטנדרטיים של Kubernetes. ההגירה היא Helm charts,
+          OCI Vault במקום הסוד הנוכחי, OCI Load Balancer, ו‑OKE Workload Identity לאימות מול שירותי OCI.
+          אין שכתוב אפליקציות.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="risks">
+    <div class="sec-head">
+      <span class="num">§ 7</span>
+      <h2>סיכונים ומה עושים איתם</h2>
+    </div>
+    <div class="stack-tight">
+      <div class="risk high">
+        <div class="bar"></div>
+        <div class="body">
+          <h3>A2A הוא הפרוטוקול הצעיר — ושם הכי קל להיתקע</h3>
+          <p>הבשלות בין המוצרים לא אחידה: Kong טוען לכיסוי הרחב ביותר, Gravitee ו‑agentgateway מספקים proxy מלא, ורוב הזירה לא מספקת כלום.</p>
+          <p class="mit"><b>מיטיגציה:</b> להתחיל A2A רק בין סוכנים פנימיים, להחזיק את ה‑Agent Cards ברג'יסטרי שלנו, ולא לחשוף A2A לשותפים חיצוניים לפני שהפרוטוקול מתייצב.</p>
+        </div>
+      </div>
+      <div class="risk">
+        <div class="bar"></div>
+        <div class="body">
+          <h3>פערי APIM מול פלטפורמה בוגרת</h3>
+          <p>kgateway + Gloo Portal נותנים גייטוויי, פורטל, אנליטיקה ומוניטיזציה — אבל לא ממשל מחזור חיים בעומק של Gravitee, Kong או Axway.</p>
+          <p class="mit"><b>מיטיגציה:</b> להגדיר מראש את סף הכאב — מספר APIs, מספר צרכנים חיצוניים, דרישת מוניטיזציה. אם חוצים אותו, החלופה היא Gravitee, והחוזים מ‑§5 הופכים את המעבר לטכני בלבד.</p>
+        </div>
+      </div>
+      <div class="risk">
+        <div class="bar"></div>
+        <div class="body">
+          <h3>יכולות AI נעולות מאחורי Enterprise</h3>
+          <p>אצל Kong וגם Gravitee דווקא יכולות ה‑MCP וה‑A2A הן EE בלבד — כלומר החלק הקריטי הוא החלק שאי אפשר להריץ בלי רישיון.</p>
+          <p class="mit"><b>מיטיגציה:</b> זו הסיבה המרכזית להמלצה. ב‑agentgateway ו‑kgateway כל יכולות התעבורה בליבה ה‑Apache‑2.0; הרישיון קונה תמיכה ו‑hardening, לא את היכולת לעבוד.</p>
+        </div>
+      </div>
+      <div class="risk low">
+        <div class="bar"></div>
+        <div class="body">
+          <h3>זמינות מודלים ואזורים ב‑OCI</h3>
+          <p>נקודות הקצה תואמות‑OpenAI תומכות רק במודלים נתמכים באזורים נתמכים — מה שעלול לא לכסות את כל מה שרץ היום.</p>
+          <p class="mit"><b>מיטיגציה:</b> למפות כבר עכשיו את המודלים בשימוש מול מטריצת האזורים של Oracle, ולהשאיר את השער מסוגל לנתב לשני ספקים במקביל גם אחרי ההגירה.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="plan">
+    <div class="sec-head">
+      <span class="num">§ 8</span>
+      <h2>תוכנית 90 יום</h2>
+      <p class="lede" style="font-size:1rem">
+        לא POC של פיצ'רים — POC של חוזים. כל שלב מסתיים בשער החלטה שאפשר לענות עליו בכן או לא.
+      </p>
+    </div>
+    <div class="phases">
+      <div class="phase">
+        <span class="when">יום 1–20</span>
+        <div>
+          <h3>שכבת LLM בלבד</h3>
+          <ul>
+            <li>agentgateway על ה‑K8s הקיים, מול שני ספקי LLM בפרודקשן</li>
+            <li>אכיפת החוזה: כל צרכן עובר ל‑<code>/v1/chat/completions</code>, אפס SDK ספציפי‑ספק</li>
+            <li>virtual keys לכל צוות, תקציבי טוקנים, OTLP ל‑stack הניטור הקיים</li>
+            <li>במקביל: הרצת LiteLLM מול OCI GenAI בטננסי ניסיון לאימות מסלול ההגירה</li>
+          </ul>
+          <p class="gate"><b>שער:</b> האם 100% מתעבורת ה‑LLM עוברת בשער, ויש דוח עלות לפי צוות?</p>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="when">יום 21–50</span>
+        <div>
+          <h3>MCP וקטלוג הכלים</h3>
+          <ul>
+            <li>ContextForge כרג'יסטרי; שלושה עד חמישה שרתי MCP פנימיים בעלי ערך אמיתי</li>
+            <li>הסבת כל שרת ל‑Streamable HTTP + OAuth 2.1, ביטול <code>stdio</code></li>
+            <li>הרשאה ברמת כלי בודד לפי צוות, ובדיקת tool poisoning ו‑rug pull</li>
+            <li>token exchange מול Vault לזהות משתמש‑קצה אל מול מערכות המקור</li>
+          </ul>
+          <p class="gate"><b>שער:</b> האם אפשר לענות "מי הפעיל איזה כלי, בשם מי, ומתי" מלוג אחד?</p>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="when">יום 51–75</span>
+        <div>
+          <h3>A2A ו‑APIM במקביל</h3>
+          <ul>
+            <li>שני סוכנים פנימיים מדברים A2A דרך השער, עם audit מלא של השיחה</li>
+            <li>kgateway מעלה את ה‑APIs הראשונים ואת פורטל המפתחים</li>
+            <li>הערכת עומק ה‑APIM מול סף הכאב שהוגדר ב‑§7</li>
+          </ul>
+          <p class="gate"><b>שער:</b> האם kgateway מספיק כ‑APIM ארגוני, או שמפעילים את חלופת Gravitee?</p>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="when">יום 76–90</span>
+        <div>
+          <h3>חזרה יבשה ל‑OCI</h3>
+          <ul>
+            <li>פריסת אותם Helm charts על אשכול OKE בטננסי הניסיון</li>
+            <li>החלפת ספקי הסודות, הזהות והטלמטריה ל‑Vault, IAM domains ו‑APM</li>
+            <li>הפניית נתיב LLM אחד ל‑<code>/openai/v1</code> של OCI GenAI ומדידת דלתא</li>
+            <li>החלטת רכש: חוזה Solo Enterprise, או מעבר למסלול Gravitee</li>
+          </ul>
+          <p class="gate"><b>שער:</b> האם ההגירה היא שינוי תצורה בלבד? אם לא — איזה חוזה מ‑§5 הופר?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="div" style="margin-top:60px">
+
+  <section id="sources" style="padding-top:34px">
+    <div class="sec-head">
+      <span class="num">§ 9</span>
+      <h2>מקורות</h2>
+    </div>
+    <ul class="sources plainlist">
+      <li><a href="https://agentgateway.dev/docs/standalone/latest/documentation/about/introduction/">agentgateway — Introduction</a></li>
+      <li><a href="https://github.com/agentgateway/agentgateway">agentgateway — GitHub</a></li>
+      <li><a href="https://www.linuxfoundation.org/press/linux-foundation-welcomes-agentgateway-project-to-accelerate-ai-agent-adoption-while-maintaining-security-observability-and-governance">Linux Foundation — Welcoming agentgateway</a></li>
+      <li><a href="https://www.solo.io/blog/updated-a2a-and-mcp-gateway">Solo.io — Agent Gateway overhaul for A2A and MCP</a></li>
+      <li><a href="https://www.solo.io/products/kgateway">Solo.io — kgateway</a></li>
+      <li><a href="https://docs.solo.io/kgateway/2.2.x/portal/overview/">Solo — About Portal</a></li>
+      <li><a href="https://ibm.github.io/mcp-context-forge/overview/">IBM ContextForge — Overview</a></li>
+      <li><a href="https://github.com/IBM/mcp-context-forge/releases">IBM ContextForge — Releases</a></li>
+      <li><a href="https://www.gravitee.io/platform/ai-gateway">Gravitee — AI Gateway</a></li>
+      <li><a href="https://documentation.gravitee.io/apim/introduction/enterprise-edition">Gravitee — Enterprise Edition</a></li>
+      <li><a href="https://documentation.gravitee.io/apim/4.10/agent-mesh">Gravitee — AI Agent Management</a></li>
+      <li><a href="https://konghq.com/company/press-room/press-release/kong-ai-gateway-now-supports-agent-to-agent-traffic-becoming-the-most-comprehensive-ai-gateway-for-the-agentic-era">Kong — Agent Gateway / A2A announcement</a></li>
+      <li><a href="https://developer.konghq.com/plugins/ai-mcp-proxy/">Kong — AI MCP Proxy plugin</a></li>
+      <li><a href="https://konghq.com/blog/product-releases/mcp-support-across-konnect">Kong — MCP support across Konnect</a></li>
+      <li><a href="https://www.globenewswire.com/news-release/2026/03/31/3265629/0/en/WSO2-Launches-API-Platform-to-Make-Enterprise-APIs-Agent-Ready-Without-Vendor-Lock-In.html">WSO2 — API Platform launch</a></li>
+      <li><a href="https://zuplo.com/learning-center/ai-gateway-comparison-mcp-a2a-agent-governance">Zuplo — AI gateway comparison</a></li>
+      <li><a href="https://obot.ai/blog/the-13-best-mcp-gateways-for-enterprise-teams/">Obot — 13 MCP gateways compared</a></li>
+      <li><a href="https://docs.oracle.com/en-us/iaas/Content/generative-ai/openai-compatible-api.htm">Oracle — OCI OpenAI-compatible endpoints</a></li>
+      <li><a href="https://docs.oracle.com/en/solutions/implement-ai-model-api-management/index.html">Oracle — API management for enterprise AI models</a></li>
+      <li><a href="https://www.oracle.com/artificial-intelligence/enterprise-ai/">Oracle — OCI Enterprise AI</a></li>
+      <li><a href="https://blogs.oracle.com/machinelearning/introducing-oracle-autonomous-ai-database-a2a-server-for-governed-multi-agent-systems">Oracle — Autonomous AI Database A2A Server</a></li>
+      <li><a href="https://www.oracle.com/mcp/">Oracle — MCP servers</a></li>
+      <li><a href="https://blogs.oracle.com/ai-and-datascience/litellm-natively-supports-generative-ai">Oracle — LiteLLM native OCI support</a></li>
+      <li><a href="https://docs.litellm.ai/docs/providers/oci">LiteLLM — OCI provider docs</a></li>
+      <li><a href="https://www.gravitee.io/blog/gravitee-in-gartner-market-guide-for-ai-gateways">Gartner Market Guide for AI Gateways (via Gravitee)</a></li>
+    </ul>
+  </section>
+
+</div>
+
+</body>
+</html>
